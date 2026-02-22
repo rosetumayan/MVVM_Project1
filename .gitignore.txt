@@ -1,0 +1,107 @@
+Visual Studio Ignore List
+
+Build results
+
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+Visual Studio 2015/2017/2019/2022/2026 cache and settings
+
+.vs/
+*.swp
+*.lut
+*.desktop
+*.ide
+*.pfx
+*.publishsettings
+node_modules/
+
+User-specific files
+
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+Roslyn cache directories
+
+*.Selector.txt
+
+Unit Test Reports
+
+TestResults/
+[Tt]est[Rr]esult*/
+_TeamCity*
+
+StyleCop
+
+StyleCop.Cache
+
+Files built by Visual Studio
+
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.buildlog
+*.aps
+*.ncb
+*.opendb
+*.pdb
+*.sql
+*.log
+
+NuGet Packages
+
+*.nupkg
+
+The packages folder can be restored, so we don't need to upload it
+
+packages/
+!packages/build/
+
+Entity Framework migrations (optional: keep if you want others to have your migrations)
+
+*.log
+
+*.xml
+
+Windows image caches
+
+Thumbs.db
+ehthumbs.db
+
+Folder config file
+
+Desktop.ini
