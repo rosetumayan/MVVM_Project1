@@ -110,7 +110,7 @@
                                FontSize="14"
                                FontWeight="Medium"/>
                     <TextBox x:Name="txtUsername"
-                             Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding CurrentUser.Username,UpdateSourceTrigger=PropertyChanged}"
                              FontSize ="13"
                              FontWeight="Medium"
                              Foreground="White" 

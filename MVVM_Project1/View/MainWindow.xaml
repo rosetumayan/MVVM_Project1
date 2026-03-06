@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Welcome to the Main Window!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="0,0,0,10" />
+            <TextBlock Text="Please enter your name below: " FontSize="16" Margin="0,0,0,5" />
+            <TextBox Width="200" Height="30" Margin="0,0,0,10" Text="{Binding CurrentUser.Username, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Please password your name below: " FontSize="16" Margin="0,0,0,5" />
+            <PasswordBox Width="200" Height="30" Margin="0,0,0,10" x:Name="txtPassword" />
+            <Button Width="100" Height="20" Content="Go to Login Page" Command="{Binding GoToLogin}" CommandParameter="{Binding ElementName=txtPassword}" />
+        </StackPanel>
     </Grid>
 </Window>

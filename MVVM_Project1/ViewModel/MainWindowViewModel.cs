@@ -1,40 +1,40 @@
 ﻿using MVVM_Project1.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MVVM_Project1.ViewModel
 {
-    public class LoginViewModel : ObservableObject
-    {
+    internal class MainWindowViewModel: ObservableObject
 
+    {
+        //Data
         public UserModel CurrentUser { get; set; }
 
-        public ICommand LoginCommand { get; set; }
-        public ICommand ForgotPasswordCommand { get; }
+        //Create a public property of ICommand type
+        public ICommand GoToLogin {get; set;}
 
-        public LoginViewModel()
+        public MainWindowViewModel()
         {
             CurrentUser = new UserModel();
-            LoginCommand = new RelayCommand(ExecuteLogin);
-            ForgotPasswordCommand = new RelayCommand(ExecuteForgotPassword);
+            //Initialize the command and link it to the method
+            GoToLogin = new RelayCommand(ExecuteGoToLogin);
         }
 
-        private void ExecuteLogin(object? parameter)
+        private void ExecuteGoToLogin(object? par)
         {
-            var password = parameter as PasswordBox;
-            if (password != null)
-            {
+            var password = par as PasswordBox;
+            if (password != null) {
                 CurrentUser.Password = password.Password;
             }
             if (CurrentUser.Username.Trim() == "admin" && CurrentUser.Password.Trim() == "1234")
             {
-                var newViewModel = new HomePageViewModel(CurrentUser);
-                var loginWindow = new View.HomePage();
-                loginWindow.DataContext = newViewModel;
+                var loginWindow = new View.User_Login();
                 loginWindow.Show();
                 //close the current main window
                 Application.Current.MainWindow.Close();
@@ -43,11 +43,7 @@ namespace MVVM_Project1.ViewModel
             {
                 MessageBox.Show("Invalid Username or Password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
 
-        private void ExecuteForgotPassword(object? par)
-        {
-            CurrentUser.StatusMessage = "Instructions sent to your campus email.";
         }
     }
 }
