@@ -17,6 +17,8 @@ namespace MVVM_Project1.Model
         //private DateTime _dateReceived = DateTime.Now;
         private bool _isFound = false;
 
+        
+
 
         public string ItemName
         {

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using MVVM_Project1.Model;
+using MVVM_Project1.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +18,16 @@ using System.Windows.Shapes;
 namespace MVVM_Project1.View
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class HomePage : Window
+    public partial class Window1 : Window
     {
-        public HomePage()
+        public Window1()
         {
             InitializeComponent();
-            
+            this.DataContext = new AddLostItemsViewModel(new ObservableCollection<LostItems>());
         }
+
+        
     }
 }

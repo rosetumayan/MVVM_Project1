@@ -21,6 +21,8 @@ namespace MVVM_Project1.ViewModel
         public ICommand ReportLostCommand { get; set; }
         public ICommand ViewFoundItemsCommand { get; set; }
 
+        public ICommand AddNewLostItemCommand { get; set; }
+
         public HomePageViewModel(UserModel CurrentUser)
         {
             LostItemsList = new ObservableCollection<LostItems>()
@@ -38,6 +40,17 @@ namespace MVVM_Project1.ViewModel
             ExitCommand = new RelayCommand(ExecuteExit);
             ReportLostCommand = new RelayCommand(ExecuteReportLost);
             ViewFoundItemsCommand = new RelayCommand(ExecuteViewFoundItems);
+            AddNewLostItemCommand = new RelayCommand(ExecuteAddNewLostItem);
+        }
+
+        private void ExecuteAddNewLostItem(object? obj)
+        {
+
+            var formViewModel = new AddLostItemsViewModel(LostItemsList);
+            var formWindow = new View.Window1{ DataContext = formViewModel};
+            formWindow.ShowDialog();
+            
+
         }
 
         public void ExecuteLogout(object? par)
