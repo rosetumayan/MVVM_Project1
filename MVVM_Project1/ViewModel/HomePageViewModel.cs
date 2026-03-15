@@ -16,12 +16,42 @@ namespace MVVM_Project1.ViewModel
         public ObservableCollection<LostItems> LostItemsList { get; set; }
         //data
         public UserModel LoggedInUser { get; set; }
+
+        public LostItems newLostItems { get; set; }
+
+        private LostItems _selectedLostItems;
+        public LostItems SelectedLostItems
+        {
+            get { return _selectedLostItems; }
+            set
+            {
+                _selectedLostItems = value;
+                OnPropertyChanged(nameof(SelectedLostItems));
+
+                if (SelectedLostItems != null)
+                {
+                    newLostItems.ItemName = SelectedLostItems.ItemName;
+                    newLostItems.Description = SelectedLostItems.Description;
+                    newLostItems.Location = SelectedLostItems.Location;
+                    newLostItems.DateReported = SelectedLostItems.DateReported;
+                    newLostItems.IsFound = SelectedLostItems.IsFound;
+                }
+
+            }
+        }
+
+        public ICommand ShowHomePageCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+
+        public ICommand DeleteCommand { get; set; }
+
+        public ICommand ClearCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
         public ICommand ExitCommand { get; set; }
-        public ICommand ReportLostCommand { get; set; }
-        public ICommand ViewFoundItemsCommand { get; set; }
+        
+      
 
-        public ICommand AddNewLostItemCommand { get; set; }
+       
 
         public HomePageViewModel(UserModel CurrentUser)
         {
@@ -36,22 +66,67 @@ namespace MVVM_Project1.ViewModel
             };
 
             LoggedInUser = CurrentUser;
+            newLostItems = new LostItems();
+            _selectedLostItems = new LostItems();
+            ShowHomePageCommand = new RelayCommand(ExecuteShowHomePage);
+            SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
+            ClearCommand = new RelayCommand(ExecuteClearCommand);
             LogoutCommand = new RelayCommand(ExecuteLogout);
             ExitCommand = new RelayCommand(ExecuteExit);
-            ReportLostCommand = new RelayCommand(ExecuteReportLost);
-            ViewFoundItemsCommand = new RelayCommand(ExecuteViewFoundItems);
-            AddNewLostItemCommand = new RelayCommand(ExecuteAddNewLostItem);
+            
+            
         }
 
-        private void ExecuteAddNewLostItem(object? obj)
+
+        public void ExecuteShowHomePage(object? par)
+        {
+            // This method can be used to refresh the home page.
+            // Refresh Current Window
+                var homePageWindow = new View.HomePage();
+                homePageWindow.DataContext = this; // Set the DataContext to the current ViewModel
+                homePageWindow.Show();
+                //close the current main window
+                Application.Current.MainWindow.Close();
+
+
+        }
+
+        public void ExecuteSaveCommand(object? par)
         {
 
-            var formViewModel = new AddLostItemsViewModel(LostItemsList);
-            var formWindow = new View.Window1{ DataContext = formViewModel};
-            formWindow.ShowDialog();
-            
+            LostItemsList.Add(new LostItems
+            {
+                ItemName = newLostItems.ItemName,
+                Description = newLostItems.Description,
+                DateReported = newLostItems.DateReported,
+                Location = newLostItems.Location,
+                IsFound = newLostItems.IsFound
+            });
+            MessageBox.Show("Success", "New Record Added", MessageBoxButton.OK, MessageBoxImage.Information);
+            newLostItems.ItemName = string.Empty;
+            newLostItems.Description = string.Empty;
+            newLostItems.Location = string.Empty;
+            newLostItems.DateReported = DateTime.Now;
+            newLostItems.IsFound = false;
+
 
         }
+
+        public void ExecuteDeleteCommand(object? par)
+        {
+            LostItemsList.Remove(SelectedLostItems);
+        }
+
+        public void ExecuteClearCommand(object? par)
+        {
+            newLostItems.ItemName = string.Empty;
+            newLostItems.Description = string.Empty;
+            newLostItems.Location = string.Empty;
+            newLostItems.DateReported = DateTime.Now;
+            newLostItems.IsFound = false;
+        }
+
 
         public void ExecuteLogout(object? par)
         {
@@ -66,10 +141,10 @@ namespace MVVM_Project1.ViewModel
             Application.Current.Shutdown();
         }
 
-        public void ExecuteReportLost(object? par)
-        {
-            MessageBox.Show("Your report has been submitted. Please check your campus email for updates.", "Report Submitted", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+        
+
+        
+       
 
         public void ExecuteViewFoundItems(object? par)
         {

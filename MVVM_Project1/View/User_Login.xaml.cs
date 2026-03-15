@@ -20,7 +20,7 @@ namespace MVVM_Project1.View
         public User_Login()
         {
             InitializeComponent();
-            this.DataContext = new ViewModel.LoginViewModel();
+           // this.DataContext = new ViewModel.LoginViewModel();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -31,29 +31,9 @@ namespace MVVM_Project1.View
             }
         }
 
-        private void btnMin_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+        
 
-        private void btnMax_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-                btnMaxImage.Source= new BitmapImage(new Uri("/Images/window-maximize.png", UriKind.Relative));
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-                btnMaxImage.Source = new BitmapImage(new Uri("/Images/window-restore.png", UriKind.Relative));
-            }
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+       
 
         private void chkShowPassword_Checked(object sender, RoutedEventArgs e)
         {
