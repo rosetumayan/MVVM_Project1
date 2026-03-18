@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.IO;
 
 namespace MVVM_Project1.ViewModel
 {
@@ -18,6 +19,7 @@ namespace MVVM_Project1.ViewModel
         public UserModel LoggedInUser { get; set; }
 
         public LostItems newLostItems { get; set; }
+        
 
         private LostItems _selectedLostItems;
         public LostItems SelectedLostItems
@@ -55,15 +57,7 @@ namespace MVVM_Project1.ViewModel
 
         public HomePageViewModel(UserModel CurrentUser)
         {
-            LostItemsList = new ObservableCollection<LostItems>()
-            {
-                new LostItems { ItemName = " Wallet", Description = "Black", Location = "Library", DateReported = new DateTime(2024, 5, 10), IsFound = true },
-                new LostItems { ItemName = " Keys", Description = "Set of 3", Location = "Cafeteria", DateReported = new DateTime(2024, 5, 12), IsFound = true },
-                new LostItems { ItemName = " Backpack", Description = "Blue with white stripes", Location = "Gym", DateReported = new DateTime(2024, 5, 15), IsFound = false },
-                new LostItems { ItemName = " Phone", Description = "iPhone 12", Location = "Lecture Hall", DateReported = new DateTime(2024, 5, 18), IsFound = false },
-                new LostItems { ItemName = " Sunglasses", Description = "Ray-Ban Aviators", Location = "Park", DateReported = new DateTime(2024, 5, 20), IsFound = false }
-
-            };
+            LostItemsList = new ObservableCollection<LostItems>();
 
             LoggedInUser = CurrentUser;
             newLostItems = new LostItems();
@@ -74,8 +68,29 @@ namespace MVVM_Project1.ViewModel
             ClearCommand = new RelayCommand(ExecuteClearCommand);
             LogoutCommand = new RelayCommand(ExecuteLogout);
             ExitCommand = new RelayCommand(ExecuteExit);
+            LoadItemsFromFile();
             
-            
+        }
+
+        private void LoadItemsFromFile()
+        {
+            string[] allLines = File.ReadAllLines("source.csv");
+
+            foreach (string line in allLines)
+            {
+                
+                string[] pieces = line.Split(',');
+
+                
+                LostItems item = new LostItems();
+                item.ItemName = pieces[0];
+                item.Description = pieces[1];
+                item.Location = pieces[2];
+                item.DateReported = DateTime.Parse(pieces[3]);
+                item.IsFound = bool.Parse(pieces[4]);
+
+                LostItemsList.Add(item);
+            }
         }
 
 
